@@ -1,6 +1,7 @@
 import itertools
 
 def twentyfour(int_input):
+  result_set = {}
   for nums in itertools.permutations(int_input):
     for ops in itertools.product('+-*/', repeat=3):
       formula1 = '(({0}{4}{1}){5}{2}){6}{3}'.format(*nums, *ops)
@@ -12,9 +13,12 @@ def twentyfour(int_input):
       for formula in [formula1, formula2, formula3, formula4, formula5]:
         try:
           if abs(eval(formula) - 24.0) < 1e-8:
-            print(formula)
+            if not formula in result_set:
+              result_set[formula] = 1
         except ZeroDivisionError:
           continue
+  for formula in result_set:
+    print(formula)
 
 def main():
   str_input = input('Numbers: ')
